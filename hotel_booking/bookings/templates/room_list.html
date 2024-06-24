@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rooms</title>
+    
+    <h3><a href="/">Home</a> </h3>
+
+    <style>
+    div {
+
+        border : 2px solid black;
+        padding: 20px;
+        margin-bottom : 10 px ;
+
+    }
+
+    ul {
+
+        list-style-type: none;
+        padding: 0; 
+        margin: 0; 
+    }
+
+    form {
+
+       padding : 20px
+    }
+
+  </style>
+
+</head>
+<body>
+    <h1>{{ hotel.name }} Rooms</h1>
+    <form method="GET">
+        <select name="room_type">
+            <option value="">All Types</option>
+            <option value="single">Single Room</option>
+            <option value="double">Double Room</option>
+            <option value="deluxe">Deluxe Room</option>
+        </select>
+        <input type="number" name="min_price" placeholder="Min Price" value="{{ request.GET.min_price }}">
+        <input type="number" name="max_price" placeholder="Max Price" value="{{ request.GET.max_price }}">
+        <input type="date" name="check_in" placeholder="Check-in" value="{{ request.GET.check_in }}">
+        <input type="date" name="check_out" placeholder="Check-out" value="{{ request.GET.check_out }}">
+        <button type="submit">Filter</button>
+    </form>
+    <ul>
+        {% for room in rooms %}
+
+        <div>
+            <li>
+                <img src="{{ room.image.url }}" alt="{{ room.get_room_type_display }}  width="100" height="100" " >
+                <p>{{ room.get_room_type_display }}</p>
+                <p>{{ room.price }}</p>
+                <a href="{% url 'book_room' room.id %}">Book Now</a>
+            </li>
+
+        </div>
+        
+        {% endfor %}
+    </ul>
+</body>
+</html>

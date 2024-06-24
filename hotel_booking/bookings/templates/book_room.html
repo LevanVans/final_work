@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Room</title>
+
+
+    <h3><a href="/">Home</a> </h3>
+
+    <style>
+        
+        div {
+
+            border : 2px solid black;
+            padding: 20px;
+    
+        }
+
+        ul {
+
+            list-style-type: none;
+            padding: 0; 
+            margin: 0; 
+        }
+
+        
+    form {
+
+        padding : 20px
+     }
+
+      </style>
+
+
+</head>
+<body>
+    <h1>Book Room - {{ room.hotel.name }} - {{ room.get_room_type_display }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="user_name" placeholder="Your Name" required>
+        <input type="text" name="user_phone" placeholder="Your Phone" required>
+        <input type="date" name="check_in" required>
+        <input type="date" name="check_out" required>
+        <button type="submit">Book Now</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Hotel</th>
+                <th>Room</th>
+                <th>User</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.room.hotel.name }}</td>
+                    <td>{{ booking.room.get_room_type_display }}</td>
+                    <td>{{ booking.user_name }}</td>
+                    <td>{{ booking.check_in }}</td>
+                    <td>{{ booking.check_out }}</td>
+                    <td>{{ booking.total_price }}</td>
+                    <td>{{ booking.status }}</td>
+                    <td><a href="{% url 'cancel_booking' booking.id %}">Cancel</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+</body>
+</html>

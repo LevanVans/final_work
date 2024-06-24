@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotels</title>
+
+    <h3><a href="/">Home</a> </h3>
+
+
+    <style>
+        
+        div {
+
+            border : 2px solid black;
+            padding: 20px;
+    
+        }
+
+        ul {
+
+            list-style-type: none;
+            padding: 0; 
+            margin: 0; 
+        }
+
+        
+    form {
+
+        padding : 20px
+     }
+
+      </style>
+</head>
+<body>
+    <h1>Hotels</h1>
+    <form method="GET">
+        <input type="text" name="city" placeholder="City" value="{{ request.GET.city }}">
+        <button type="submit">Filter</button>
+    </form>
+    <ul>
+        {% for hotel in hotels %}
+        <div>
+            <li>
+                <img  wi src="{{ hotel.image.url }}" alt="{{ hotel.name }}  width="100" height="100"">
+                <p>{{ hotel.name }}</p>
+                <p>{{ hotel.city }}</p>
+                <a href="{% url 'room_list' hotel.id %}">View Rooms</a>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+</body>
+</html>

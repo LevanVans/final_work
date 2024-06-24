@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booked Rooms</title>
+
+    <h3><a href="/">Home</a> </h3>
+    <style>
+        
+        div {
+
+            border : 2px solid black;
+            padding: 20px;
+    
+        }
+
+        ul {
+
+            list-style-type: none;
+            padding: 0; 
+            margin: 0; 
+        }
+
+        
+    form {
+
+        padding : 20px
+     }
+
+      </style>
+
+
+</head>
+<body>
+    <h1>Booked Rooms</h1>
+    <form method="GET">
+        <input type="text" name="city" placeholder="City" value="{{ request.GET.city }}">
+        <button type="submit">Filter</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Hotel</th>
+                <th>Room</th>
+                <th>User</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.room.hotel.name }}</td>
+                    <td>{{ booking.room.get_room_type_display }}</td>
+                    <td>{{ booking.user_name }}</td>
+                    <td>{{ booking.check_in }}</td>
+                    <td>{{ booking.check_out }}</td>
+                    <td>{{ booking.total_price }}</td>
+                    <td>{{ booking.status }}</td>
+                    <td><a href="{% url 'cancel_booking' booking.id %}">Cancel</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
